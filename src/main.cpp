@@ -4,7 +4,7 @@
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
   // Check cv versionmake
   std::cout << "Using OpenCV version: " << CV_VERSION << std::endl;
@@ -55,7 +55,17 @@ int main(int argc, char **argv)
 
     // Draw markers custom
     for (size_t i = 0; i < corners.size(); ++i)
-      cv::fillPoly(right, corners[i], cv::Scalar(255, 0, 0, 100));
+    {
+      // Convert to integer ponits
+      int num = static_cast<int>(corners[i].size());
+      std::vector<cv::Point> points;
+      for (size_t j = 0; j < corners[i].size(); ++j)
+        points.push_back(cv::Point(static_cast<int>(corners[i][j].x), static_cast<int>(corners[i][j].y)));
+      const cv::Point* pts = &(points[0]);
+
+      // Draw
+      cv::fillPoly(right, &pts, &num, 1, cv::Scalar(255, 0, 0));
+    }
 
     // Display
     cv::imshow("Display window", out_image);
