@@ -45,6 +45,15 @@ int main(int argc, char** argv)
     cv::Mat right(out_image, cv::Rect(2 * image_size.width, 0, image_size.width, image_size.height));
     image.copyTo(right);
 
+    // Add names to images
+    int corner_offset = 50;
+    cv::putText(left, "Original image", cv::Point(corner_offset, corner_offset), cv::FONT_HERSHEY_DUPLEX, 1.0,
+                CV_RGB(0, 0, 0), 2);
+    cv::putText(mid, "Image with OpenCV drawing", cv::Point(corner_offset, corner_offset), cv::FONT_HERSHEY_DUPLEX, 1.0,
+                CV_RGB(0, 0, 0), 2);
+    cv::putText(right, "Image with custom drawing", cv::Point(corner_offset, corner_offset), cv::FONT_HERSHEY_DUPLEX,
+                1.0, CV_RGB(0, 0, 0), 2);
+
     // Detect markers
     std::vector<int> ids;
     std::vector<std::vector<cv::Point2f> > corners;
@@ -65,6 +74,13 @@ int main(int argc, char** argv)
 
       // Draw
       cv::fillPoly(right, &pts, &num, 1, cv::Scalar(255, 0, 0));
+
+      // Draw contour
+      for (size_t j = 0; j < corners[i].size(); ++j)
+      {
+        size_t next = (j + 1) % corners[i].size();
+        cv::line(right, corners[i][j], corners[i][next], cv::Scalar(0, 255, 0), 5);
+      }
     }
 
     // Display
