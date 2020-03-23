@@ -6,7 +6,7 @@
 
 int main(int argc, char **argv)
 {
-  // Check cv version
+  // Check cv versionmake
   std::cout << "Using OpenCV version: " << CV_VERSION << std::endl;
 
   // Create video input
@@ -14,7 +14,7 @@ int main(int argc, char **argv)
   int input_source(0);
   if (argc > 1)
     input_source = std::atoi(argv[1]);
-  if (inputVideo.open(input_source))
+  if (!inputVideo.open(input_source))
   {
     std::cerr << "Error opening input video soruce: " << input_source << std::endl;
     return EXIT_FAILURE;
