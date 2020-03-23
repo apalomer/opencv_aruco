@@ -6,6 +6,9 @@
 
 int main(int argc, char **argv)
 {
+  // Check cv version
+  std::cout << "Using OpenCV version: " << CV_VERSION << std::endl;
+
   // Create video input
   cv::VideoCapture inputVideo;
   int input_source(0);
@@ -13,7 +16,7 @@ int main(int argc, char **argv)
     input_source = std::atoi(argv[1]);
   if (inputVideo.open(input_source))
   {
-    std::cerr << "Error opening input video soruce: " << input_source;
+    std::cerr << "Error opening input video soruce: " << input_source << std::endl;
     return EXIT_FAILURE;
   }
 
@@ -21,7 +24,7 @@ int main(int argc, char **argv)
   auto marker_dict = cv::aruco::getPredefinedDictionary(cv::aruco::PREDEFINED_DICTIONARY_NAME::DICT_4X4_50);
 
   // Get imshow ready
-  cv::namedWindow("Display window", CV_WINDOW_KEEPRATIO | CV_WINDOW_NORMAL);
+  cv::namedWindow("Display window", cv::WINDOW_KEEPRATIO | cv::WINDOW_NORMAL);
   cv::resizeWindow("Display window", 800, 600);
 
   // Grab images until escape is pressed
